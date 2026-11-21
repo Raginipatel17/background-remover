@@ -5,26 +5,23 @@ let canvas=document.querySelector('.canvas');
 let clear=document.querySelector('.clear');
 let mousecoordinate=document.createElement('div');
 let ctx=canvas.getContext('2d');
+let canvaspoints=canvas.getBoundingClientRect();
 
 document.querySelector('body').appendChild(mousecoordinate);
 
 canvas.addEventListener('mousedown',(e)=>{
-    let canvaspoints=canvas.getBoundingClientRect();
-    
     firstmousecoordinate=(e.clientX - canvaspoints.x) * (canvas.width / canvaspoints.width);
     secondmousecoordinate=(e.clientY - canvaspoints.y) * (canvas.height / canvaspoints.height);
-    mousecoordinate.innerText=`x:${e.clientX-canvaspoints.x}, y:${e.clientY-canvaspoints.y}`;
+    mousecoordinate.innerText=`x:${firstmousecoordinate}, y:${secondmousecoordinate}`;
     draw=true;
  
-    debugger;
 })
 canvas.addEventListener('mousemove',(e)=>{
     if(!draw){
         return;
     }
-    canvaspoints = canvas.getBoundingClientRect();
-    mousecoordinate.innerText=`x:${e.clientX-canvaspoints.x}, y:${e.clientY-canvaspoints.y}`;
-    debugger;
+   
+    mousecoordinate.innerText=`x:${firstmousecoordinate}, y:${secondmousecoordinate}`;
     ctx.beginPath();
     ctx.moveTo(firstmousecoordinate, secondmousecoordinate);
     console.log('firstmove1:',firstmousecoordinate,'secondmove1',secondmousecoordinate);
@@ -36,7 +33,6 @@ canvas.addEventListener('mousemove',(e)=>{
     ctx.stroke();
     firstmousecoordinate=(e.clientX - canvaspoints.x) * (canvas.width / canvaspoints.width);
     secondmousecoordinate=(e.clientY - canvaspoints.y) * (canvas.height / canvaspoints.height);
-    debugger;
     console.log("Canvas actual width:", canvas.width);
 console.log("Canvas actual height:", canvas.height);
 
