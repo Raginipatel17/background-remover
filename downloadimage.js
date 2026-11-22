@@ -1,7 +1,7 @@
 import { downloadFile } from "./copyImageToFolder";
 const image=document.querySelector('#img');
 debugger;
-image.addEventListener('change',async(e)=>{
+image.addEventListener('change',(e)=>{
     debugger;
 
    const name=e.target.files[0].name;
@@ -17,11 +17,8 @@ image.addEventListener('change',async(e)=>{
    document.querySelector('body').removeChild(anchorelement);
 debugger;
 
-   const response = await fetch('http://localhost:3000/image', {
-    method: 'POST',
-    body: formData
-  });
-
-  console.log(await response.text());
+   fetch('./copyImageToFolder.js',()=>{
+    downloadFile(url,file);
+   })
 })
 
