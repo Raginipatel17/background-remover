@@ -7,12 +7,19 @@
 </head>
 <body>
     <div style="display: flex;justify-content: space-between;">
-        <canvas class="canvas" style="border:2px solid black;width: 1300px; height: 600px;background-color: rgb(255, 255, 255);">
-    
-        </canvas>
-        <button class="clear" style="background-color: red; color: white;padding: 12px 24px;cursor: pointer;height:50px;font-size: large;">Clear Canvas</button>
+        <div>
+            <label for="img">Upload your Photo(png,jpeg,jpg)</label>
+            <input id="img" type="file" accept=".png,.jpeg,.jpg" style="margin-bottom: 8px;"/>
+
+            <canvas class="canvas" style="border:2px solid black;width: 1300px; height: 600px;background-color: rgb(255, 255, 255);">
+                
+            </canvas>
+        </div>
+        
+        <button class="clear" style="background-color: red; color: white;padding:0px 24px;cursor: pointer;height:50px;font-size: large;">Clear Canvas</button>
         
     </div>
-    <script src="index.js"></script>
+    <script src="draw.js" type="module"></script>
+    <script src="downloadimage.js" type="module"></script>
 </body>
 </html>
