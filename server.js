@@ -1,25 +1,38 @@
 const express = require('express');
+const fs=require('fs');
+const path=require('path');
 const cors=require('cors');
-const imageDownload=require('./copyImageToFolder');
+// const imageDownload=require('./copyImageToFolder');
+const multer=require('multer');
 const app = express();
 app.use(cors());
 
-app.post('/copyimage',async(req,res)=>{
-  const {filename,url}=res.body;
-  try{
-    await imageDownload.downloadFile(filename,url);
-    res.json({ 
-      success: true, 
-      message: 'Image fetched and saved!', 
-      path: savedLocation 
-    });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, error: error.message });
-    }
-})
+// Ensure the 'uploads' folder exists
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
-app.get('/',(res,req)=>{
+// Configure Multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Folder where images will be saved
+  },
+  filename: (req, file, cb) => {
+    // Give the file a unique name + original extension
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+app.post('/copyimage', upload.single('File'),async (req, res) => {
+
+  console.log(req.file); 
+  
+  
+ 
+});
+app.get('/',(req,res)=>{
   req.send("hello world");
 })
 

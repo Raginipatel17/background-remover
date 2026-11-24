@@ -46,3 +46,10 @@ canvas.addEventListener('mouseup',(e)=>{
 clear.addEventListener('click',()=>{
     ctx.clearRect(0,0,canvas.width,canvas.height);
 })
+const img = new Image();
+  img.src = "./newimage.png"; // Replace with your image path or URL
+
+  // Draw the image only after it finishes loading
+  img.onload = () => {
+    ctx.drawImage(img, 0, 0); // Draws at (x: 0, y: 0)
+  };
