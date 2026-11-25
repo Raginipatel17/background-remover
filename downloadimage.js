@@ -1,10 +1,9 @@
 const image=document.querySelector('#img');
-debugger;
+//event trigger when an image is chosen or changed
 image.addEventListener('change',async(e)=>{
-    debugger;
-
-   const name=e.target.files[0].name;
-   const file=e.target.files[0];
+  
+   const name=e.target.files[0].name; //name of the uploaded file
+   const file=e.target.files[0];  //array of file uploaded with their metadata
    
    
    const formData = new FormData();

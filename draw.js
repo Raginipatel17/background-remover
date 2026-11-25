@@ -46,10 +46,36 @@ canvas.addEventListener('mouseup',(e)=>{
 clear.addEventListener('click',()=>{
     ctx.clearRect(0,0,canvas.width,canvas.height);
 })
-const img = new Image();
-  img.src = "./newimage.png"; // Replace with your image path or URL
+const image=document.querySelector('#img');
+//event trigger when an image is chosen or changed
+image.addEventListener('change',(e)=>{
+    
+    const name=e.target.files[0].name; //name of the uploaded file
+    const file=e.target.files[0];  //array of file uploaded with their metadata
+    const blob=new Blob([file]);
+    const url=URL.createObjectURL(blob);
+    const img = new Image();
+    
+    
+    img.src = url; // Replace with your image path or URL
+    // Draw the image only after it finishes loading
+    
+   img.onload = () => {
+       const scale = Math.min(
+        canvas.width / img.naturalWidth,
+        canvas.height / img.naturalHeight
+    );
 
-  // Draw the image only after it finishes loading
-  img.onload = () => {
-    ctx.drawImage(img, 0, 0); // Draws at (x: 0, y: 0)
-  };
+  const drawWidth = img.naturalWidth * scale;
+  const drawHeight = img.naturalHeight * scale;
+
+  // Center the image on the canvas
+  const offsetX = (canvas.width - drawWidth) / 2;
+  const offsetY = (canvas.height - drawHeight) / 2;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+   };
+})
+
+ 

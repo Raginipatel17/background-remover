@@ -2,10 +2,9 @@ const express = require('express');
 const fs=require('fs');
 const path=require('path');
 const cors=require('cors');
-// const imageDownload=require('./copyImageToFolder');
-const multer=require('multer');
+const multer=require('multer'); //store data 
 const app = express();
-app.use(cors());
+app.use(cors()); //helps communication between frontend and backend
 
 // Ensure the 'uploads' folder exists
 const uploadDir = path.join(__dirname, 'uploads');
@@ -25,11 +24,10 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
 app.post('/copyimage', upload.single('File'),async (req, res) => {
 
   console.log(req.file); 
-  
-  
  
 });
 app.get('/',(req,res)=>{
