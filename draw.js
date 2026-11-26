@@ -58,23 +58,29 @@ image.addEventListener('change',(e)=>{
     
     
     img.src = url; // Replace with your image path or URL
+
     // Draw the image only after it finishes loading
-    
    img.onload = () => {
-       const scale = Math.min(
-        canvas.width / img.naturalWidth,
-        canvas.height / img.naturalHeight
-    );
 
-  const drawWidth = img.naturalWidth * scale;
-  const drawHeight = img.naturalHeight * scale;
+    canvas.width=img.naturalWidth;
+    canvas.height=img.naturalHeight;
 
-  // Center the image on the canvas
-  const offsetX = (canvas.width - drawWidth) / 2;
-  const offsetY = (canvas.height - drawHeight) / 2;
+    ctx.drawImage(img, 0,0);
+    URL.revokeObjectURL(url);
+    const imageData=ctx.getImageData(0,0,canvas.width,canvas.height);
+    const pixels = imageData.data;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+// 2. Loop through pixels (4 array elements per pixel) and invert RGB
+for (let i = 0; i < pixels.length; i += 4) {
+  pixels[i]     = 255 - pixels[i];     // Red
+  pixels[i + 1] = 255 - pixels[i + 1]; // Green
+  pixels[i + 2] = 255 - pixels[i + 2]; // Blue
+  // pixels[i + 3] is Alpha (left unchanged)
+}
+
+// 3. Draw the modified pixels back onto the canvas
+ctx.putImageData(imageData, 0, 0);
+console.log(imageData.data.length);
    };
 })
 
